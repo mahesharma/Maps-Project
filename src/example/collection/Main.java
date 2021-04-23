@@ -1,6 +1,7 @@
 package example.collection;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -14,16 +15,41 @@ public class Main {
         location.put(3, new Locations(3, "You are inside a building, a well house for a small spring"));
         location.put(4, new Locations(4, "You are in a valley beside a stream"));
         location.put(5, new Locations(5, "You are in the forest"));
+
+        location.get(1).addExits("W",2);
+        location.get(1).addExits("E",3);
+        location.get(1).addExits("N",5);
+        location.get(1).addExits("S",4);
+
+        location.get(2).addExits("N",5);
+
+        location.get(3).addExits("W",1);
+
+        location.get(4).addExits("W",2);
+        location.get(4).addExits("N",1);
+
+        location.get(5).addExits("S",1);
+        location.get(5).addExits("W",2);
+
         int loc = 1;
         while(true) {
             System.out.println(location.get(loc).getDescription());
             if(loc==0) {
                 break;
             }
-            loc = sc.nextInt();
-            if(!location.containsKey(loc)) {
-                System.out.println("You can not go in this direction");
+            Map<String,Integer> exits = location.get(loc).getExits();
+            System.out.print("Available directions are   ");
+            for(String exit : exits.keySet()){
+                System.out.print(exit +", ");
             }
+            System.out.println();
+            String value = sc.nextLine().toUpperCase();
+            if(exits.containsKey(value)) {
+                loc = exits.get(value);
+            } else {
+                System.out.println("You can not go here");
+            }
+
         }
     }
 }
