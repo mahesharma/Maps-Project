@@ -30,7 +30,12 @@ public class Main {
 
         location.get(5).addExits("S",1);
         location.get(5).addExits("W",2);
-
+        HashMap<String,String> vocabulary = new HashMap<>();
+        vocabulary.put("QUITE","Q");
+        vocabulary.put("NORTH","N");
+        vocabulary.put("SOUTH","S");
+        vocabulary.put("WEST","W");
+        vocabulary.put("EAST","E");
         int loc = 1;
         while(true) {
             System.out.println(location.get(loc).getDescription());
@@ -44,6 +49,15 @@ public class Main {
             }
             System.out.println();
             String value = sc.nextLine().toUpperCase();
+            if(value.length()>1) {
+                String[] newValue = value.split(" ");
+                for(String x : newValue) {
+                    if(vocabulary.containsKey(x)) {
+                        value = vocabulary.get(x);
+                        break;
+                    }
+                }
+            }
             if(exits.containsKey(value)) {
                 loc = exits.get(value);
             } else {
